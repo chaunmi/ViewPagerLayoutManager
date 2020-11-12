@@ -105,7 +105,11 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
 
     @Override
     protected int calItemTop(View itemView, float targetOffset) {
-        return super.calItemTop(itemView, targetOffset);
+        int top = super.calItemTop(itemView, targetOffset);
+        float scale = calculateScale(targetOffset + mSpaceMain);
+        int scaledHeight = (int)(mDecoratedMeasurementInOther * scale);
+        int scaleHeight = (mDecoratedMeasurementInOther - scaledHeight)/2;
+        return top + scaleHeight;
     }
 
 
