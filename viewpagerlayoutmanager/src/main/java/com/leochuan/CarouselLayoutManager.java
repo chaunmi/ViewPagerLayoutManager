@@ -12,6 +12,7 @@ import android.view.View;
 public class CarouselLayoutManager extends ViewPagerLayoutManager {
 
     private int itemSpace;
+    private int itemHeightSpace = 60;
     private float minScale;
     private float moveSpeed;
 
@@ -135,8 +136,12 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
     }
 
     private float calculateScale(float x) {
-        float deltaX = Math.abs(x - (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2f);
-        return (minScale - 1) * deltaX / (mOrientationHelper.getTotalSpace() / 2f) + 1f;
+//        float deltaX = Math.abs(x - (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2f);
+//        return (minScale - 1) * deltaX / (mOrientationHelper.getTotalSpace() / 2f) + 1f;
+
+        float scaledHeight = (Math.abs(x - mSpaceMain) * 1.0f / mInterval) * itemHeightSpace;
+        float scale = (mDecoratedMeasurementInOther - scaledHeight) / mDecoratedMeasurementInOther;
+        return scale;
     }
 
     public static class Builder {
