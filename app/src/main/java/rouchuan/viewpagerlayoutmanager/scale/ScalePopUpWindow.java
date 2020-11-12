@@ -2,13 +2,14 @@ package rouchuan.viewpagerlayoutmanager.scale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.leochuan.CenterSnapHelper;
 import com.leochuan.ScaleLayoutManager;
@@ -84,7 +85,7 @@ public class ScalePopUpWindow extends SettingPopUpWindow
         minAlphaValue.setText(Util.formatFloat(scaleLayoutManager.getMinAlpha()));
         maxAlphaValue.setText(Util.formatFloat(scaleLayoutManager.getMaxAlpha()));
 
-        changeOrientation.setChecked(scaleLayoutManager.getOrientation() == ViewPagerLayoutManager.VERTICAL);
+        changeOrientation.setChecked(scaleLayoutManager.getOrientation() == RecyclerView.VERTICAL);
         reverse.setChecked(scaleLayoutManager.getReverseLayout());
         infinite.setChecked(scaleLayoutManager.getInfinite());
 

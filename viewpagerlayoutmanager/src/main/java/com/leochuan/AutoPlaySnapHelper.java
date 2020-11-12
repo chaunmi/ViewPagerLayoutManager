@@ -2,10 +2,11 @@ package com.leochuan;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Scroller;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -31,6 +32,8 @@ class AutoPlaySnapHelper extends CenterSnapHelper {
         this.timeInterval = timeInterval;
         this.direction = direction;
     }
+
+
 
     @Override
     public void attachToRecyclerView(@Nullable RecyclerView recyclerView) throws IllegalStateException {
