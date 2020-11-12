@@ -85,6 +85,11 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
     }
 
     @Override
+    protected int setItemWidth(View view) {
+        return (int) (mOrientationHelper.getTotalSpace() - setInterval() * 4);
+    }
+
+    @Override
     protected void setItemViewProperty(View itemView, float targetOffset) {
         float scale = calculateScale(targetOffset + mSpaceMain);
         itemView.setScaleX(scale);
@@ -113,11 +118,10 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
         return top + scaleHeight;
     }
 
-
-    @Override
-    protected float maxRemoveOffset() {
-        return mOrientationHelper.getTotalSpace();
-    }
+//    @Override
+//    protected float maxRemoveOffset() {
+//        return mOrientationHelper.getTotalSpace();
+//    }
 
     @Override
     protected float minRemoveOffset() {
@@ -164,9 +168,10 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
             minScale = MIN_SCALE;
             this.moveSpeed = DEFAULT_SPEED;
             reverseLayout = false;
-            maxVisibleItemCount = ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN;
+            maxVisibleItemCount = 5; //ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN;
             distanceToBottom = ViewPagerLayoutManager.INVALID_SIZE;
         }
+
 
         public Builder setOrientation(int orientation) {
             this.orientation = orientation;

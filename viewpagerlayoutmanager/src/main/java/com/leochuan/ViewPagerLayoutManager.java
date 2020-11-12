@@ -98,6 +98,8 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
     protected float mInterval; //the mInterval of each item's mOffset,  每个itemView左边或者右边距离间隔
 
+    protected float mItemWidth;
+
     /* package */ OnPageChangeListener onPageChangeListener;
 
     private boolean mRecycleChildrenOnDetach;
@@ -128,6 +130,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
      * @return the mInterval of each item's mOffset
      */
     protected abstract float setInterval();
+
 
     protected abstract void setItemViewProperty(View itemView, float targetOffset);
 
@@ -389,7 +392,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         }
 
         measureChildWithMargins(scrap, 0, 0);
-        mDecoratedMeasurement = mOrientationHelper.getDecoratedMeasurement(scrap);
+        mDecoratedMeasurement = setItemWidth(scrap) ;// mOrientationHelper.getDecoratedMeasurement(scrap);
         mDecoratedMeasurementInOther = mOrientationHelper.getDecoratedMeasurementInOther(scrap);
         mSpaceMain = (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2;
         if (mDistanceToBottom == INVALID_SIZE) {
@@ -420,6 +423,11 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         }
 
         layoutItems(recycler);
+    }
+
+    protected int setItemWidth(View view) {
+        mDecoratedMeasurement = mOrientationHelper.getDecoratedMeasurement(view);
+        return mDecoratedMeasurement;
     }
 
     private View getMeasureView(RecyclerView.Recycler recycler, RecyclerView.State state, int index) {
