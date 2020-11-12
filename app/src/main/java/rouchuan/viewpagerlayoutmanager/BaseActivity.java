@@ -41,6 +41,7 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
         pageShow = findViewById(R.id.page_show_tv);
         viewPagerLayoutManager = createLayoutManager();
         DataAdapter dataAdapter = new DataAdapter();
+        dataAdapter.setViewPagerLayoutManager(viewPagerLayoutManager);
         dataAdapter.setOnItemClickListener(new DataAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {

@@ -430,6 +430,10 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         return mDecoratedMeasurement;
     }
 
+    public int getItemWidth() {
+        return mDecoratedMeasurement;
+    }
+
     private View getMeasureView(RecyclerView.Recycler recycler, RecyclerView.State state, int index) {
         if (index >= state.getItemCount() || index < 0) return null;
         try {

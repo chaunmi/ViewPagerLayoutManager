@@ -1,11 +1,15 @@
 package rouchuan.viewpagerlayoutmanager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.leochuan.ViewPagerLayoutManager;
 
 /**
  * Created by Dajavu on 25/10/2017.
@@ -16,7 +20,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         void onItemClick(View v, int pos);
     }
 
-    private int[] images = {R.drawable.item1, R.drawable.item2, R.drawable.item3,
+    private ViewPagerLayoutManager viewPagerLayoutManager;
+
+    public void setViewPagerLayoutManager(ViewPagerLayoutManager viewPagerLayoutManager) {
+        this.viewPagerLayoutManager = viewPagerLayoutManager;
+    }
+
+    private int[] images = {R.drawable.item0, R.drawable.item1, R.drawable.item2, R.drawable.item3,
             R.drawable.item4, R.drawable.item5, R.drawable.item6, R.drawable.item7,
             R.drawable.item8, R.drawable.item9, R.drawable.item10};
 
@@ -31,6 +41,27 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
         holder.imageView.setImageResource(images[position]);
         holder.imageView.setTag(position);
+
+        int width = holder.imageView.getWidth();
+        if(viewPagerLayoutManager != null) {
+            width = viewPagerLayoutManager.getItemWidth();
+        }
+        FrameLayout.LayoutParams params =  (FrameLayout.LayoutParams) holder.imageView.getLayoutParams();
+        params.width = width;
+        holder.imageView.setLayoutParams(params);
+
+//        holder.imageView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                int width = holder.imageView.getWidth();
+//                if(viewPagerLayoutManager != null) {
+//                    width = viewPagerLayoutManager.getItemWidth();
+//                }
+//                FrameLayout.LayoutParams params =  (FrameLayout.LayoutParams) holder.imageView.getLayoutParams();
+//                params.width = width;
+//                holder.imageView.setLayoutParams(params);
+//            }
+//        });
     }
 
     @Override
