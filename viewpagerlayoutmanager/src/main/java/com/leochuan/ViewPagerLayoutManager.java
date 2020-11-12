@@ -41,7 +41,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
     private SparseArray<View> positionCache = new SparseArray<>();
 
-    protected int mDecoratedMeasurement;
+    protected int mDecoratedMeasurement;  //宽度
 
     protected int mDecoratedMeasurementInOther;
 
@@ -63,7 +63,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
      * Many calculations are made depending on orientation. To keep it clean, this interface
      * helps {@link LinearLayoutManager} make those decisions.
      * Based on {@link #mOrientation}, an implementation is lazily created in
-     * {@link #ensureLayoutState} method.
+     * {@link #ensureLayoutState()} method.
      */
     protected OrientationHelper mOrientationHelper;
 
@@ -318,8 +318,8 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
      * laid out at the end of the UI, second item is laid out before it etc.
      * <p>
      * For horizontal layouts, it depends on the layout direction.
-     * When set to true, If {@link android.support.v7.widget.RecyclerView} is LTR, than it will
-     * layout from RTL, if {@link android.support.v7.widget.RecyclerView}} is RTL, it will layout
+     * When set to true, If {@link RecyclerView} is LTR, than it will
+     * layout from RTL, if {@link RecyclerView}} is RTL, it will layout
      * from LTR.
      */
     public void setReverseLayout(boolean reverseLayout) {

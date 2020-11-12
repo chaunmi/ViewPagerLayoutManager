@@ -22,6 +22,7 @@
     <string name="toggle_bring_center_in_front">Toggle Bring Center In Front</string>
     <string name="toggle_reverse_rotate">Toggle Reverse Rotate</string>
     <string name="toggle_auto_center">Toggle Auto Center</string>
+    <string name="toggle_single_page">每次滑动一张</string>
     <string name="toggle_reverse">Toggle Reverse</string>
     <string name="flip_rotate">Flip Rotate</string>
     <string name="rotate_from_edge">Rotate From Edge</string>

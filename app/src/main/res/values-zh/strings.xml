@@ -22,6 +22,7 @@
     <string name="toggle_bring_center_in_front">中心靠前排列</string>
     <string name="toggle_reverse_rotate">逆向旋转</string>
     <string name="toggle_auto_center">自动归位</string>
+    <string name="toggle_single_page">每次滑动一张</string>
     <string name="toggle_reverse">翻转排列</string>
     <string name="flip_rotate">交换翻转方向</string>
     <string name="change_orientation">改变朝向</string>

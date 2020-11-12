@@ -9,10 +9,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.leochuan.CarouselLayoutManager;
 import com.leochuan.CenterSnapHelper;
+import com.leochuan.PageSnapHelper;
 import com.leochuan.ViewPagerLayoutManager;
 
 import rouchuan.viewpagerlayoutmanager.R;
@@ -37,6 +39,7 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
     private SwitchCompat autoCenter;
     private SwitchCompat infinite;
     private SwitchCompat reverse;
+    private SwitchCompat singlePage;
     private CenterSnapHelper centerSnapHelper;
 
     CarouselPopUpWindow(Context context, CarouselLayoutManager carouselLayoutManager, RecyclerView recyclerView) {
@@ -46,6 +49,7 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_carousel_setting, null);
         setContentView(view);
 
+    //    centerSnapHelper = new PageSnapHelper();
         centerSnapHelper = new CenterSnapHelper();
 
         SeekBar itemSpace = view.findViewById(R.id.sb_item_space);
@@ -60,6 +64,7 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
         autoCenter = view.findViewById(R.id.s_auto_center);
         infinite = view.findViewById(R.id.s_infinite);
         reverse = view.findViewById(R.id.s_reverse);
+        singlePage = view.findViewById(R.id.s_page_single);
 
         itemSpace.setOnSeekBarChangeListener(this);
         speed.setOnSeekBarChangeListener(this);
@@ -81,6 +86,12 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
         autoCenter.setOnCheckedChangeListener(this);
         reverse.setOnCheckedChangeListener(this);
         infinite.setOnCheckedChangeListener(this);
+        singlePage.setOnCheckedChangeListener(this);
+
+        infinite.setChecked(true);
+        autoCenter.setChecked(true);
+        this.recyclerView.scrollToPosition(5);
+
     }
 
     @Override
@@ -127,15 +138,27 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
                         RecyclerView.VERTICAL : RecyclerView.HORIZONTAL);
                 break;
             case R.id.s_auto_center:
+                centerSnapHelper.attachToRecyclerView(null);
                 if (isChecked) {
                     centerSnapHelper.attachToRecyclerView(recyclerView);
-                } else {
-                    centerSnapHelper.attachToRecyclerView(null);
                 }
                 break;
             case R.id.s_reverse:
                 carouselLayoutManager.scrollToPosition(0);
                 carouselLayoutManager.setReverseLayout(isChecked);
+                break;
+            case R.id.s_page_single:
+                carouselLayoutManager.scrollToPosition(0);
+                centerSnapHelper.attachToRecyclerView(null);
+                if(isChecked) {
+                    centerSnapHelper = new PageSnapHelper();
+                    centerSnapHelper.attachToRecyclerView(recyclerView);
+                }else {
+                    if(autoCenter.isChecked()){
+                        centerSnapHelper = new CenterSnapHelper();
+                        centerSnapHelper.attachToRecyclerView(recyclerView);
+                    }
+                }
                 break;
         }
     }

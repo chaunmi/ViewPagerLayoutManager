@@ -113,7 +113,8 @@
             android:id="@+id/s_infinite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            />
     </FrameLayout>
 
     <FrameLayout
@@ -149,6 +150,27 @@
             android:id="@+id/s_auto_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            />
     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_single_page"
+            android:textColor="#fff" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/s_page_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            />
+    </FrameLayout>
+
 </LinearLayout>
