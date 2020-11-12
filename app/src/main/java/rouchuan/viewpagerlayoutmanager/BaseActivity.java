@@ -26,7 +26,7 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
     private RecyclerView recyclerView;
     private TextView pageShow;
     private V viewPagerLayoutManager;
-    private S settingPopUpWindow;
+    protected S settingPopUpWindow;
 
     protected abstract V createLayoutManager();
 
@@ -61,6 +61,8 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
 
             }
         });
+
+        Toast.makeText(this, "density: " + getResources().getDisplayMetrics().density, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -90,7 +90,6 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
 
         infinite.setChecked(true);
         autoCenter.setChecked(true);
-        this.recyclerView.scrollToPosition(5);
 
     }
 

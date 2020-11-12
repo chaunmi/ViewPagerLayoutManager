@@ -80,7 +80,7 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
 
     @Override
     protected float setInterval() {
-        return (mDecoratedMeasurement - itemSpace);
+        return 200f; //  (mDecoratedMeasurement - itemSpace);
     }
 
     @Override
@@ -88,6 +88,35 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
         float scale = calculateScale(targetOffset + mSpaceMain);
         itemView.setScaleX(scale);
         itemView.setScaleY(scale);
+    }
+
+    @Override
+    protected int calItemLeft(View itemView, float targetOffset) {
+        int left = super.calItemLeft(itemView, targetOffset);
+        float scale = calculateScale(targetOffset + mSpaceMain);
+        int scaledWidth = (int)(mDecoratedMeasurement * scale);
+        int scaleWidth = (mDecoratedMeasurement - scaledWidth)/2;
+        if( left < 0) {
+            return (int)(left - scaleWidth);
+        }else {
+            return (int)(left + scaleWidth);
+        }
+    }
+
+    @Override
+    protected int calItemTop(View itemView, float targetOffset) {
+        return super.calItemTop(itemView, targetOffset);
+    }
+
+
+    @Override
+    protected float maxRemoveOffset() {
+        return mOrientationHelper.getTotalSpace();
+    }
+
+    @Override
+    protected float minRemoveOffset() {
+        return super.minRemoveOffset();
     }
 
     @Override

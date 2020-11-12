@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 @SuppressWarnings({"WeakerAccess", "unused", "SameParameterValue"})
 public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
+    public static final String LOG_PREFIX = "PagerLayout_";
+
     public static final int DETERMINE_BY_MAX_AND_MIN = -1;
 
     public static final int HORIZONTAL = OrientationHelper.HORIZONTAL;
@@ -43,21 +46,21 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
     protected int mDecoratedMeasurement;  //宽度
 
-    protected int mDecoratedMeasurementInOther;
+    protected int mDecoratedMeasurementInOther;  //包含装饰和边距
 
     /**
      * Current orientation. Either {@link #HORIZONTAL} or {@link #VERTICAL}
      */
     int mOrientation;
 
-    protected int mSpaceMain;
+    protected int mSpaceMain;  //除去未缩放图片大小之后剩余半边的空间, 即中间那个view的left值
 
-    protected int mSpaceInOther;
+    protected int mSpaceInOther; //包含装饰和边距
 
     /**
      * The offset of property which will change while scrolling
      */
-    protected float mOffset;
+    protected float mOffset;  //总的滑动距离
 
     /**
      * Many calculations are made depending on orientation. To keep it clean, this interface
@@ -93,13 +96,13 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
     private SavedState mPendingSavedState = null;
 
-    protected float mInterval; //the mInterval of each item's mOffset
+    protected float mInterval; //the mInterval of each item's mOffset,  每个itemView左边或者右边距离间隔
 
     /* package */ OnPageChangeListener onPageChangeListener;
 
     private boolean mRecycleChildrenOnDetach;
 
-    private boolean mInfinite = false;
+    private boolean mInfinite = false;  //是否循环
 
     private boolean mEnableBringCenterToFront;
 
@@ -659,6 +662,8 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         }
 
         float lastOrderWeight = Float.MIN_VALUE;
+        Log.i(LOG_PREFIX, " -------------------- startLayout -----------------------");
+
         for (int i = start; i < end; i++) {
             if (useMaxVisibleCount() || !removeCondition(getProperty(i) - mOffset)) {
                 // start and end base on current position,
@@ -675,7 +680,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
                 measureChildWithMargins(scrap, 0, 0);
                 resetViewProperty(scrap);
                 // we need i to calculate the real offset of current view
-                final float targetOffset = getProperty(i) - mOffset;
+                final float targetOffset = getProperty(i) - mOffset;  //正常偏移量
                 layoutScrap(scrap, targetOffset);
                 final float orderWeight = mEnableBringCenterToFront ?
                         setViewElevation(scrap, targetOffset) : adapterPosition;
@@ -684,6 +689,8 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
                 } else {
                     addView(scrap, 0);
                 }
+                Log.i(LOG_PREFIX, " i: " + i + ", adapterPosition: " + adapterPosition +
+                        ", targetOffset: " + targetOffset + ", orderWeight: " + orderWeight + ", lastOrderWeight: " + lastOrderWeight);
                 if (i == currentPos) currentFocusView = scrap;
                 lastOrderWeight = orderWeight;
                 positionCache.put(i, scrap);

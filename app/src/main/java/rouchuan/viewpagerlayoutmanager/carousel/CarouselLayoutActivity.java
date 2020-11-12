@@ -1,5 +1,9 @@
 package rouchuan.viewpagerlayoutmanager.carousel;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+
 import com.leochuan.CarouselLayoutManager;
 
 import rouchuan.viewpagerlayoutmanager.BaseActivity;
@@ -10,6 +14,12 @@ import rouchuan.viewpagerlayoutmanager.Util;
  */
 
 public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, CarouselPopUpWindow> {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        settingPopUpWindow = createSettingPopUpWindow();
+    }
 
     @Override
     protected CarouselLayoutManager createLayoutManager() {

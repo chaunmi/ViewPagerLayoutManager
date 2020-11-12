@@ -17,4 +17,6 @@ public class Util {
     public static String formatFloat(float value) {
         return String.format(Locale.getDefault(), "%.3f", value);
     }
+
+    public static final String LOG_PREFIX = "PagerLayout_";
 }
