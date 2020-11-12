@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import com.leochuan.ViewPagerLayoutManager;
 public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends SettingPopUpWindow>
         extends AppCompatActivity {
     private RecyclerView recyclerView;
+    private TextView pageShow;
     private V viewPagerLayoutManager;
     private S settingPopUpWindow;
 
@@ -36,6 +38,7 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
         setContentView(R.layout.activity_base);
         setTitle(getIntent().getCharSequenceExtra(MainActivity.INTENT_TITLE));
         recyclerView = findViewById(R.id.recycler);
+        pageShow = findViewById(R.id.page_show_tv);
         viewPagerLayoutManager = createLayoutManager();
         DataAdapter dataAdapter = new DataAdapter();
         dataAdapter.setOnItemClickListener(new DataAdapter.OnItemClickListener() {
@@ -47,6 +50,17 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
         });
         recyclerView.setAdapter(dataAdapter);
         recyclerView.setLayoutManager(viewPagerLayoutManager);
+        viewPagerLayoutManager.setOnPageChangeListener(new ViewPagerLayoutManager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                pageShow.setText((position + 1) + "/" + dataAdapter.getItemCount());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
