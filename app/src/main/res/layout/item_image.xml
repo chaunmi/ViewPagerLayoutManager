@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.kproduce.roundcorners.RoundFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="300dp"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="5dp">
+    app:rRadius="10dp"
+    app:rStrokeWidth="2dp"
+    app:rStrokeColor="@color/CC10"
+    >
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
@@ -12,4 +15,12 @@
         android:scaleType="fitXY"
         tools:src="@drawable/item0"
         />
-</androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/lock_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+
+        />
+</com.kproduce.roundcorners.RoundFrameLayout>

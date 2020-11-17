@@ -81,19 +81,28 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
 
     @Override
     protected float setInterval() {
-        return 200f; //  (mDecoratedMeasurement - itemSpace);
+        return itemSpace; //  (mDecoratedMeasurement - itemSpace);
     }
 
-    @Override
-    protected int setItemWidth(View view) {
-        return (int) (mOrientationHelper.getTotalSpace() - setInterval() * 4);
-    }
+//    @Override
+//    protected int setItemWidth(View view) {
+//        return (int) (mOrientationHelper.getTotalSpace() - setInterval() * 4);
+//    }
 
     @Override
     protected void setItemViewProperty(View itemView, float targetOffset) {
         float scale = calculateScale(targetOffset + mSpaceMain);
         itemView.setScaleX(scale);
         itemView.setScaleY(scale);
+    }
+
+    private float calculateScale(float x) {
+//        float deltaX = Math.abs(x - (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2f);
+//        return (minScale - 1) * deltaX / (mOrientationHelper.getTotalSpace() / 2f) + 1f;
+
+        float scaledHeight = (Math.abs(x - mSpaceMain) * 1.0f / mInterval) * itemHeightSpace;
+        float scale = (mDecoratedMeasurementInOther - scaledHeight) / mDecoratedMeasurementInOther;
+        return scale;
     }
 
     @Override
@@ -139,14 +148,6 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
         return itemView.getScaleX() * 5;
     }
 
-    private float calculateScale(float x) {
-//        float deltaX = Math.abs(x - (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2f);
-//        return (minScale - 1) * deltaX / (mOrientationHelper.getTotalSpace() / 2f) + 1f;
-
-        float scaledHeight = (Math.abs(x - mSpaceMain) * 1.0f / mInterval) * itemHeightSpace;
-        float scale = (mDecoratedMeasurementInOther - scaledHeight) / mDecoratedMeasurementInOther;
-        return scale;
-    }
 
     public static class Builder {
         private static final float DEFAULT_SPEED = 1f;

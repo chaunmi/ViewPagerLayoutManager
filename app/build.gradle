@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "rouchuan.circlelayoutmanager"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.2.1'
+//    implementation 'com.github.KuangGang:RoundCorners:1.0.6'
     implementation project(path: ':viewpagerlayoutmanager')
 //    implementation 'rouchuan.viewpagerlayoutmanager:viewpagerlayoutmanager:2.0.2'
 }

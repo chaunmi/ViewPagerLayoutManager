@@ -473,6 +473,10 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         return null;
     }
 
+    public View getCurrentFocusView() {
+        return currentFocusView;
+    }
+
     private int getMovement(int direction) {
         if (mOrientation == VERTICAL) {
             if (direction == View.FOCUS_UP) {
@@ -506,7 +510,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
     }
 
-    private float getProperty(int position) {
+    public float getProperty(int position) {
         return mShouldReverseLayout ? position * -mInterval : position * mInterval;
     }
 
@@ -631,10 +635,9 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         realDx = willScroll / getDistanceRatio();
 
         mOffset += realDx;
-
+        Log.i(LOG_PREFIX, "------------------ start scrollBy  realDx: " + realDx + ",mOffset: " + mOffset + " -----------------");
         //handle recycle
         layoutItems(recycler);
-
         return willScroll;
     }
 
@@ -694,6 +697,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
                 // we need i to calculate the real offset of current view
                 final float targetOffset = getProperty(i) - mOffset;  //正常偏移量
                 layoutScrap(scrap, targetOffset);
+                float scale = scrap.getScaleX();
                 final float orderWeight = mEnableBringCenterToFront ?
                         setViewElevation(scrap, targetOffset) : adapterPosition;
                 if (orderWeight > lastOrderWeight) {
@@ -702,7 +706,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
                     addView(scrap, 0);
                 }
                 Log.i(LOG_PREFIX, " i: " + i + ", adapterPosition: " + adapterPosition +
-                        ", targetOffset: " + targetOffset + ", orderWeight: " + orderWeight + ", lastOrderWeight: " + lastOrderWeight);
+                        ", targetOffset: " + targetOffset + ", orderWeight: " + orderWeight + ", lastOrderWeight: " + lastOrderWeight + ", currentPos: " + currentPos + ", scale: " + scale);
                 if (i == currentPos) currentFocusView = scrap;
                 lastOrderWeight = orderWeight;
                 positionCache.put(i, scrap);
@@ -824,6 +828,10 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
     /* package */ int getCurrentPositionOffset() {
         if (mInterval == 0) return 0;
         return Math.round(mOffset / mInterval);
+    }
+
+    public float getOffset() {
+        return mOffset;
     }
 
     /**

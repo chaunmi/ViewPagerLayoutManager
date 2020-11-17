@@ -1,5 +1,8 @@
 package rouchuan.viewpagerlayoutmanager;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,8 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.leochuan.BlurBitmapUtil;
+import com.leochuan.CarouselLayoutManager;
 import com.leochuan.ViewPagerLayoutManager;
 
 /**
@@ -20,10 +25,16 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         void onItemClick(View v, int pos);
     }
 
-    private ViewPagerLayoutManager viewPagerLayoutManager;
+    private CarouselLayoutManager viewPagerLayoutManager;
 
-    public void setViewPagerLayoutManager(ViewPagerLayoutManager viewPagerLayoutManager) {
+    private RecyclerView recyclerView;
+
+    public void setViewPagerLayoutManager(CarouselLayoutManager viewPagerLayoutManager) {
         this.viewPagerLayoutManager = viewPagerLayoutManager;
+    }
+
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     private int[] images = {R.drawable.item0, R.drawable.item1, R.drawable.item2, R.drawable.item3,
@@ -34,34 +45,19 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public DataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false));
+        int totalWidth = recyclerView.getWidth();
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
+        RecyclerView.LayoutParams params =  (RecyclerView.LayoutParams) view.getLayoutParams();
+        params.width = totalWidth - (viewPagerLayoutManager.getMaxVisibleItemCount() - 1)* viewPagerLayoutManager.getItemSpace();
+        view.setLayoutParams(params);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
+
         holder.imageView.setImageResource(images[position]);
         holder.imageView.setTag(position);
-
-        int width = holder.imageView.getWidth();
-        if(viewPagerLayoutManager != null) {
-            width = viewPagerLayoutManager.getItemWidth();
-        }
-        FrameLayout.LayoutParams params =  (FrameLayout.LayoutParams) holder.imageView.getLayoutParams();
-        params.width = width;
-        holder.imageView.setLayoutParams(params);
-
-//        holder.imageView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                int width = holder.imageView.getWidth();
-//                if(viewPagerLayoutManager != null) {
-//                    width = viewPagerLayoutManager.getItemWidth();
-//                }
-//                FrameLayout.LayoutParams params =  (FrameLayout.LayoutParams) holder.imageView.getLayoutParams();
-//                params.width = width;
-//                holder.imageView.setLayoutParams(params);
-//            }
-//        });
     }
 
     @Override
@@ -69,12 +65,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return images.length;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-
+    public class ViewHolder extends RecyclerView.ViewHolder {
+       public ImageView imageView;
+       public ImageView iconBgView;
         ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image);
+            iconBgView = itemView.findViewById(R.id.lock_bg);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

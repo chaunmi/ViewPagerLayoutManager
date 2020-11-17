@@ -1,6 +1,7 @@
 package rouchuan.viewpagerlayoutmanager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,8 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.leochuan.ScrollHelper;
 import com.leochuan.ViewPagerLayoutManager;
 
+import static com.leochuan.ViewPagerLayoutManager.LOG_PREFIX;
+
 
 /**
  * Created by Dajavu on 26/10/2017.
@@ -23,11 +27,11 @@ import com.leochuan.ViewPagerLayoutManager;
 
 public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends SettingPopUpWindow>
         extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
     private TextView pageShow;
-    private V viewPagerLayoutManager;
+    protected V viewPagerLayoutManager;
     protected S settingPopUpWindow;
-
+    protected DataAdapter dataAdapter;
     protected abstract V createLayoutManager();
 
     protected abstract S createSettingPopUpWindow();
@@ -40,8 +44,8 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
         recyclerView = findViewById(R.id.recycler);
         pageShow = findViewById(R.id.page_show_tv);
         viewPagerLayoutManager = createLayoutManager();
-        DataAdapter dataAdapter = new DataAdapter();
-        dataAdapter.setViewPagerLayoutManager(viewPagerLayoutManager);
+        dataAdapter = new DataAdapter();
+        dataAdapter.setRecyclerView(recyclerView);
         dataAdapter.setOnItemClickListener(new DataAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
