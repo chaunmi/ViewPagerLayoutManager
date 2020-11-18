@@ -1,18 +1,12 @@
 package rouchuan.viewpagerlayoutmanager;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.leochuan.BlurBitmapUtil;
 import com.leochuan.CarouselLayoutManager;
 import com.leochuan.ViewPagerLayoutManager;
 
@@ -28,6 +22,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private CarouselLayoutManager viewPagerLayoutManager;
 
     private RecyclerView recyclerView;
+    public int itemSpace = 0;
+    public int maxVisibleItemCount = ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN;
 
     public void setViewPagerLayoutManager(CarouselLayoutManager viewPagerLayoutManager) {
         this.viewPagerLayoutManager = viewPagerLayoutManager;
@@ -37,7 +33,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         this.recyclerView = recyclerView;
     }
 
-    private int[] images = {R.drawable.item0, R.drawable.item1, R.drawable.item2, R.drawable.item3,
+    int[] images = {R.drawable.item0, R.drawable.item1, R.drawable.item2, R.drawable.item3,
             R.drawable.item4, R.drawable.item5, R.drawable.item6, R.drawable.item7,
             R.drawable.item8, R.drawable.item9, R.drawable.item10};
 
@@ -47,10 +43,23 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public DataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int totalWidth = recyclerView.getWidth();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
-        RecyclerView.LayoutParams params =  (RecyclerView.LayoutParams) view.getLayoutParams();
-        params.width = totalWidth - (viewPagerLayoutManager.getMaxVisibleItemCount() - 1)* viewPagerLayoutManager.getItemSpace();
-        view.setLayoutParams(params);
+        int width = getItemWidth();
+        if(width != 0) {
+            RecyclerView.LayoutParams params =  (RecyclerView.LayoutParams) view.getLayoutParams();
+            params.width = width;
+            view.setLayoutParams(params);
+        }
         return new ViewHolder(view);
+    }
+
+    private int getItemWidth() {
+        int width = 0;
+        if(maxVisibleItemCount == ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN) {
+            width = (int)(recyclerView.getMeasuredWidth() - itemSpace * 1.0f / 2);
+        }else {
+            width = recyclerView.getMeasuredWidth() - itemSpace * (maxVisibleItemCount - 1);
+        }
+        return width;
     }
 
     @Override

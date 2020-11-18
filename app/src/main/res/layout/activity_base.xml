@@ -7,6 +7,7 @@
     tools:context="rouchuan.viewpagerlayoutmanager.MainActivity">
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,9 +15,10 @@
 
         <TextView
             android:id="@+id/page_show_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
             android:textSize="30sp"
             tools:text="2332"
             />
@@ -33,13 +35,26 @@
             android:background="#0000FF"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:scrollbars="horizontal"
-            android:id="@+id/recycler"
-            android:layout_marginTop="30dp"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/blurBg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:scrollbars="horizontal"
+                android:id="@+id/recycler"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </FrameLayout>
 
     </LinearLayout>
 

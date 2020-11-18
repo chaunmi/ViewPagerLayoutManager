@@ -5,8 +5,6 @@
     android:layout_height="300dp"
     xmlns:tools="http://schemas.android.com/tools"
     app:rRadius="10dp"
-    app:rStrokeWidth="2dp"
-    app:rStrokeColor="@color/CC10"
     >
     <ImageView
         android:id="@+id/image"
@@ -21,6 +19,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-
         />
 </com.kproduce.roundcorners.RoundFrameLayout>

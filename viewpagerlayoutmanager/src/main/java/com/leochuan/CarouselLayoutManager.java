@@ -169,7 +169,7 @@ public class CarouselLayoutManager extends ViewPagerLayoutManager {
             minScale = MIN_SCALE;
             this.moveSpeed = DEFAULT_SPEED;
             reverseLayout = false;
-            maxVisibleItemCount = 5; //ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN;
+            maxVisibleItemCount = ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN;
             distanceToBottom = ViewPagerLayoutManager.INVALID_SIZE;
         }
 

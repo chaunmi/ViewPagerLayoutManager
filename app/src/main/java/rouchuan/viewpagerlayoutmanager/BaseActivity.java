@@ -1,11 +1,14 @@
 package rouchuan.viewpagerlayoutmanager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.leochuan.BlurBitmapUtil;
 import com.leochuan.ScrollHelper;
 import com.leochuan.ViewPagerLayoutManager;
 
@@ -28,7 +32,8 @@ import static com.leochuan.ViewPagerLayoutManager.LOG_PREFIX;
 public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends SettingPopUpWindow>
         extends AppCompatActivity {
     protected RecyclerView recyclerView;
-    private TextView pageShow;
+    protected TextView pageShow;
+    protected ImageView blurImg;
     protected V viewPagerLayoutManager;
     protected S settingPopUpWindow;
     protected DataAdapter dataAdapter;
@@ -43,6 +48,7 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
         setTitle(getIntent().getCharSequenceExtra(MainActivity.INTENT_TITLE));
         recyclerView = findViewById(R.id.recycler);
         pageShow = findViewById(R.id.page_show_tv);
+        blurImg = findViewById(R.id.blurBg);
         viewPagerLayoutManager = createLayoutManager();
         dataAdapter = new DataAdapter();
         dataAdapter.setRecyclerView(recyclerView);
@@ -59,6 +65,9 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
             @Override
             public void onPageSelected(int position) {
                 pageShow.setText((position + 1) + "/" + dataAdapter.getItemCount());
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), dataAdapter.images[position]);
+                Bitmap blurBitmap = BlurBitmapUtil.blurBitmap(BaseActivity.this, bitmap, 15f);
+                blurImg.setImageBitmap(blurBitmap);
             }
 
             @Override
