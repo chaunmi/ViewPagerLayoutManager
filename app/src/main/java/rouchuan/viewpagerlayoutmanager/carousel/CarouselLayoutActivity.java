@@ -168,14 +168,17 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                             alphaFg = 0.05f;
                             percent = Math.abs(targetOffset) / Math.abs(normalOffset);
                             alphaFg = alphaFg * percent;
-
                         }else {
                             alphaImg = 0f;
                             alphaFg = 0.0f;
                         }
                     }else {
                         alphaImg = 0f;
-                        alphaFg = 0.0f;
+                        if(alphaIndex == 1) {
+                            alphaFg = 0.05f;
+                        }else {
+                            alphaFg = 0.0f;
+                        }
                     }
                 }else {  //右边部分
                     if(direction == DIRECTION_LEFT) { //向左边移动
@@ -197,7 +200,11 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                         alphaFg = 0.0f;
                     }else {
                         alphaImg = 0f;
-                        alphaFg = 0.0f;
+                        if(alphaIndex == 1) {
+                            alphaFg = 0.05f;
+                        }else {
+                            alphaFg = 0.0f;
+                        }
                     }
 
                 }
@@ -208,8 +215,9 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                 ((DataAdapter.ViewHolder)viewHolder).imageView.setAlpha(alphaImg);
             }
 
-            Log.i(LOG_PREFIX, " child index: " + i + ", layoutPos: " + layoutPos + ", alphaImg: " + alphaImg +
-                    ", centerLayoutPos: " + centerLayoutPos + ", targetOffset: " + targetOffset + ", normalOffset: " + normalOffset + ", percent: " + percent);
+            Log.i(LOG_PREFIX, " child index: " + i + ", layoutPos: " + layoutPos + ", alphaImg: " + alphaImg + ", alphaFg: " + alphaFg +
+                    ", centerLayoutPos: " + centerLayoutPos + ", targetOffset: " + targetOffset +
+                    ", normalOffset: " + normalOffset + ", percent: " + percent);
         }
     }
 
