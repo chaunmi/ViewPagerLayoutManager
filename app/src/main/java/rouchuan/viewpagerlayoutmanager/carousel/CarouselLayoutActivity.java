@@ -112,6 +112,8 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
     final int DIRECTION_RIGHT = 1;  //从左往右滑动
 
     public void updateAlphas2() {
+        Log.i(LOG_PREFIX, " -------------------------- updateAlphas2 ---------------------");
+
         int itemSpace = viewPagerLayoutManager.getItemSpace();
         int scrollOffset = Math.abs(viewPagerLayoutManager.getOffsetToCenter());
 
@@ -215,8 +217,9 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                 ((DataAdapter.ViewHolder)viewHolder).imageView.setAlpha(alphaImg);
             }
 
-            Log.i(LOG_PREFIX, " child index: " + i + ", layoutPos: " + layoutPos + ", alphaImg: " + alphaImg + ", alphaFg: " + alphaFg +
-                    ", centerLayoutPos: " + centerLayoutPos + ", targetOffset: " + targetOffset +
+            Log.i(LOG_PREFIX, " child index: " + i + ", layoutPos: " + layoutPos +  ", direction: " + direction + ", centerLayoutPos: " +
+                    centerLayoutPos + ", alphaImg: " + alphaImg + ", alphaFg: " + alphaFg +
+                  ", targetOffset: " + targetOffset +
                     ", normalOffset: " + normalOffset + ", percent: " + percent);
         }
     }
