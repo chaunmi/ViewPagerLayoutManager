@@ -148,20 +148,20 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
             }
 
             float percent = 0f;
-            if(layoutPos == centerLayoutPos) {
+            if(layoutPos == centerLayoutPos) {  //中间位置
                 //img
                 percent = Math.abs(targetOffset) / itemSpace;
-                alphaImg =  alphaImg * (1 -percent);
+                alphaImg =  alphasImg[0] * (1 -percent);
                 //前景蒙层
                 percent = (itemSpace - Math.abs(targetOffset)) / itemSpace;
-                alphaFg = 0.05f * (1 - percent);
+                alphaFg = alphasFg[1] * (1 - percent);
 
             }else {
                 if(layoutPos < centerLayoutPos) {  //左边部分
-                    if(direction == DIRECTION_LEFT) {
+                    if(direction == DIRECTION_LEFT) { //从右向左移动
                         alphaImg = 0f;
                         alphaFg = 0.0f;
-                    }else if(direction == DIRECTION_RIGHT) { //向右移动
+                    }else if(direction == DIRECTION_RIGHT) { //从左向右移动
                         if(alphaIndex == 1) {
                             alphaImg = alphasImg[alphaIndex - 1];
                             percent = Math.abs(targetOffset - normalOffset) / Math.abs(normalOffset);
@@ -174,7 +174,7 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                             alphaImg = 0f;
                             alphaFg = 0.0f;
                         }
-                    }else {
+                    }else {  //未滑动
                         alphaImg = 0f;
                         if(alphaIndex == 1) {
                             alphaFg = 0.05f;
@@ -183,7 +183,7 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                         }
                     }
                 }else {  //右边部分
-                    if(direction == DIRECTION_LEFT) { //向左边移动
+                    if(direction == DIRECTION_LEFT) { //从右向左边移动
                         if(alphaIndex == 1) {
                             alphaImg = alphasImg[alphaIndex - 1];
                             percent = Math.abs(targetOffset) / Math.abs(normalOffset);
@@ -197,7 +197,7 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                             alphaImg = 0f;
                             alphaFg = 0.0f;
                         }
-                    }else if(direction == DIRECTION_RIGHT) { //向右边移动
+                    }else if(direction == DIRECTION_RIGHT) { //从左向右边移动
                         alphaImg = 0f;
                         alphaFg = 0.0f;
                     }else {
