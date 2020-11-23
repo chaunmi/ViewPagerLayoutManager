@@ -634,13 +634,13 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
             willScroll = (int) ((getMaxOffset() - mOffset) * getDistanceRatio());
         }
 
-        int realScrollDy = (int)(willScroll / getDistanceRatio());
+        realDx = willScroll / getDistanceRatio();
 
-        mOffset += realScrollDy;
-        Log.i(LOG_PREFIX, "------------------ start scrollBy, dy: " + dy + ", realDx: " + realScrollDy + ", mOffset: " + mOffset + " -----------------");
+        mOffset += realDx;
+        Log.i(LOG_PREFIX, "------------------ start scrollBy, dy: " + dy + ", realDx: " + realDx + ", mOffset: " + mOffset + " -----------------");
         //handle recycle
         layoutItems(recycler);
-        return realScrollDy;
+        return willScroll;
     }
 
     private void layoutItems(RecyclerView.Recycler recycler) {
