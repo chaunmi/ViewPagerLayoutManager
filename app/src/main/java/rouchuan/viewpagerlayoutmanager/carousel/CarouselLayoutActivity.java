@@ -1,5 +1,7 @@
 package rouchuan.viewpagerlayoutmanager.carousel;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.leochuan.BlurBitmapUtil;
 import com.leochuan.CarouselLayoutManager;
+import com.leochuan.ViewPagerLayoutManager;
 
 import rouchuan.viewpagerlayoutmanager.BaseActivity;
 import rouchuan.viewpagerlayoutmanager.DataAdapter;
@@ -29,6 +33,27 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
         settingPopUpWindow = createSettingPopUpWindow();
         dataAdapter.setViewPagerLayoutManager(viewPagerLayoutManager);
         dataAdapter.itemSpace = ITEM_SPACE;
+        pageShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.requestLayout();
+            }
+        });
+        viewPagerLayoutManager.setOnPageChangeListener(new ViewPagerLayoutManager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                pageShow.setText((position + 1) + "/" + dataAdapter.getItemCount());
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), dataAdapter.images[position]);
+                Bitmap blurBitmap = BlurBitmapUtil.blurBitmap(CarouselLayoutActivity.this, bitmap, 15f);
+                blurImg.setImageBitmap(blurBitmap);
+                updateAlphas2();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -105,7 +130,7 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
     }
 
     final float[] alphasImg = new float[]{1.0f, 0.05f, 0.01f};
-    final float[] alphasFg = new float[]{0.0f, 0.05f, 0.1f};
+    final float[] alphasFg = new float[]{0.0f, 0.05f, 0.0f};
 
     final int DIRECTION_LEFT = -1; //从右往左滑动
     final int DIRECTION_NO = 0;
@@ -160,19 +185,29 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                 if(layoutPos < centerLayoutPos) {  //左边部分
                     if(direction == DIRECTION_LEFT) { //从右向左移动
                         alphaImg = 0f;
-                        alphaFg = 0.0f;
+
+                        if(alphaIndex == 1) {
+                            alphaFg = 0.05f;
+                            percent = Math.abs(targetOffset - normalOffset) / itemSpace;
+                            alphaFg = alphaFg * (1 - percent);
+                        }else {
+                            alphaFg = 0.0f;
+                        }
                     }else if(direction == DIRECTION_RIGHT) { //从左向右移动
                         if(alphaIndex == 1) {
                             alphaImg = alphasImg[alphaIndex - 1];
-                            percent = Math.abs(targetOffset - normalOffset) / Math.abs(normalOffset);
+                            percent = Math.abs(targetOffset - normalOffset) / itemSpace;
                             alphaImg = alphaImg * percent;
 
                             alphaFg = 0.05f;
-                            percent = Math.abs(targetOffset) / Math.abs(normalOffset);
+                            percent = Math.abs(targetOffset) / itemSpace;
                             alphaFg = alphaFg * percent;
                         }else {
                             alphaImg = 0f;
-                            alphaFg = 0.0f;
+
+                            alphaFg = 0.05f;
+                            percent = Math.abs(targetOffset - normalOffset) / itemSpace;
+                            alphaFg = alphaFg * percent;
                         }
                     }else {  //未滑动
                         alphaImg = 0f;
@@ -186,20 +221,29 @@ public class CarouselLayoutActivity extends BaseActivity<CarouselLayoutManager, 
                     if(direction == DIRECTION_LEFT) { //从右向左边移动
                         if(alphaIndex == 1) {
                             alphaImg = alphasImg[alphaIndex - 1];
-                            percent = Math.abs(targetOffset) / Math.abs(normalOffset);
+                            percent = Math.abs(targetOffset) / itemSpace;
                             alphaImg = alphaImg * (1- percent);
 
                             alphaFg = 0.05f;
-                            percent = Math.abs(targetOffset) / Math.abs(normalOffset);
                             alphaFg = alphaFg * percent;
 
                         }else {
                             alphaImg = 0f;
-                            alphaFg = 0.0f;
+
+                            alphaFg = 0.05f;
+                            percent = Math.abs(targetOffset - normalOffset) / itemSpace;
+                            alphaFg = alphaFg * percent;
                         }
                     }else if(direction == DIRECTION_RIGHT) { //从左向右边移动
                         alphaImg = 0f;
-                        alphaFg = 0.0f;
+
+                        if(alphaIndex == 1) {
+                            alphaFg = 0.05f;
+                            percent = Math.abs(targetOffset - normalOffset) / itemSpace;
+                            alphaFg = alphaFg * (1 - percent);
+                        }else {
+                            alphaFg = 0.0f;
+                        }
                     }else {
                         alphaImg = 0f;
                         if(alphaIndex == 1) {

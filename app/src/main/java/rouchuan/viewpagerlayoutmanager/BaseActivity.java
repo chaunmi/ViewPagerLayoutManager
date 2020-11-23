@@ -61,20 +61,6 @@ public abstract class BaseActivity<V extends ViewPagerLayoutManager, S extends S
         });
         recyclerView.setAdapter(dataAdapter);
         recyclerView.setLayoutManager(viewPagerLayoutManager);
-        viewPagerLayoutManager.setOnPageChangeListener(new ViewPagerLayoutManager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                pageShow.setText((position + 1) + "/" + dataAdapter.getItemCount());
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), dataAdapter.images[position]);
-                Bitmap blurBitmap = BlurBitmapUtil.blurBitmap(BaseActivity.this, bitmap, 15f);
-                blurImg.setImageBitmap(blurBitmap);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         Toast.makeText(this, "density: " + getResources().getDisplayMetrics().density, Toast.LENGTH_LONG).show();
     }

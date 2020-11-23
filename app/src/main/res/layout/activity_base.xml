@@ -46,7 +46,7 @@
                 android:scaleType="fitXY"
                 />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <rouchuan.viewpagerlayoutmanager.carousel.ArcRecyclerView
                 android:scrollbars="horizontal"
                 android:id="@+id/recycler"
                 android:layout_marginTop="30dp"

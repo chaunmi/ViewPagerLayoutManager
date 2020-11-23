@@ -391,6 +391,8 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
             return;
         }
 
+        Log.d(LOG_PREFIX, " onLayoutChildren ");
+
         measureChildWithMargins(scrap, 0, 0);
         mDecoratedMeasurement = setItemWidth(scrap) ;// mOrientationHelper.getDecoratedMeasurement(scrap);
         mDecoratedMeasurementInOther = mOrientationHelper.getDecoratedMeasurementInOther(scrap);
@@ -632,13 +634,13 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
             willScroll = (int) ((getMaxOffset() - mOffset) * getDistanceRatio());
         }
 
-        realDx = willScroll / getDistanceRatio();
+        int realScrollDy = (int)(willScroll / getDistanceRatio());
 
-        mOffset += realDx;
-        Log.i(LOG_PREFIX, "------------------ start scrollBy  realDx: " + realDx + ",mOffset: " + mOffset + " -----------------");
+        mOffset += realScrollDy;
+        Log.i(LOG_PREFIX, "------------------ start scrollBy, dy: " + dy + ", realDx: " + realScrollDy + ", mOffset: " + mOffset + " -----------------");
         //handle recycle
         layoutItems(recycler);
-        return willScroll;
+        return realScrollDy;
     }
 
     private void layoutItems(RecyclerView.Recycler recycler) {
