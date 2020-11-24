@@ -1,6 +1,7 @@
 package com.leochuan;
 
 
+import android.util.Log;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Scroller;
 
@@ -16,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class CenterSnapHelper extends RecyclerView.OnFlingListener {
 
-    RecyclerView mRecyclerView;
+    protected RecyclerView mRecyclerView;
     Scroller mGravityScroller;
 
+    protected int lastPage = 0;
+    protected float lastOffset = 0;
     /**
      * when the dataSet is extremely large
      * {@link #snapToCenterView(ViewPagerLayoutManager, ViewPagerLayoutManager.OnPageChangeListener)}
@@ -133,7 +136,6 @@ public class CenterSnapHelper extends RecyclerView.OnFlingListener {
             setupCallbacks();
             mGravityScroller = new Scroller(mRecyclerView.getContext(),
                     new DecelerateInterpolator());
-
             snapToCenterView((ViewPagerLayoutManager) layoutManager,
                     ((ViewPagerLayoutManager) layoutManager).onPageChangeListener);
         }
@@ -148,10 +150,13 @@ public class CenterSnapHelper extends RecyclerView.OnFlingListener {
                 mRecyclerView.smoothScrollBy(0, delta);
             else
                 mRecyclerView.smoothScrollBy(delta, 0);
+            Log.i(ViewPagerLayoutManager.LOG_PREFIX, " snapToCenterView, delta: " + delta);
         } else {
             // set it false to make smoothScrollToPosition keep trigger the listener
             snapToCenter = false;
         }
+        lastOffset = layoutManager.getOffset();
+        lastPage = layoutManager.getCurrentPositionOffset();
 
         if (listener != null)
             listener.onPageSelected(layoutManager.getCurrentPosition());

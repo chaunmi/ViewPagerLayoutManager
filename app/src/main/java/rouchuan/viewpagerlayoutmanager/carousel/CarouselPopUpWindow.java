@@ -150,7 +150,7 @@ public class CarouselPopUpWindow extends SettingPopUpWindow
                 carouselLayoutManager.scrollToPosition(0);
                 centerSnapHelper.attachToRecyclerView(null);
                 if(isChecked) {
-                    centerSnapHelper = new PageSnapHelper();
+                    centerSnapHelper = new SinglePageSnapHelper();
                     centerSnapHelper.attachToRecyclerView(recyclerView);
                 }else {
                     if(autoCenter.isChecked()){

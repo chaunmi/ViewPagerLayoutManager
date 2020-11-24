@@ -46,7 +46,6 @@ public class PageSnapHelper extends CenterSnapHelper {
             final int offsetPosition = mGravityScroller.getFinalX() * layoutManager.getDistanceRatio() > layoutManager.mInterval ? 1 : 0;
             ScrollHelper.smoothScrollToPosition(mRecyclerView, layoutManager, layoutManager.getReverseLayout() ?
                     -currentPosition - offsetPosition : currentPosition + offsetPosition);
-            Log.i(ViewPagerLayoutManager.LOG_PREFIX, " currentPosition: " + currentPosition + ",offsetPosition: " + offsetPosition);
             return true;
         }
 
